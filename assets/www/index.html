@@ -1,0 +1,354 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>NewsPro</title> 
+<!--
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />	
+<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>-->
+
+<link rel="stylesheet" href="css-js/jquery.mobile-1.0a2.min.css" />	
+<script src="css-js/jquery-1.4.4.min.js"></script>
+<script src="css-js/jquery.mobile-1.0a2.min.js"></script>
+<!-- <script src="css-js/jquery.ba-dotimeout.js"></script> --> 
+<!-- <script src="css-js/jquery.dst.js"></script> --> 
+
+<style> 
+  	.conatiner{
+		overflow:auto;
+	}
+
+	.clear {
+   		height: 0;
+   		font-size: 1px;
+   		margin: 0;
+   		padding: 0;
+   		line-height: 0;
+   		clear: both;
+   	}
+
+	.image{
+		position:relative;
+		border:4px solid black;
+		border-radius: 5px;
+		float:left;
+	}
+	
+	.image a:hover{
+		position:relative;
+		border:4px solid white;
+		border-radius: 5px;
+		float:left;
+	}
+
+	.image1{
+		position:relative;
+		border:4px solid black;
+		border-radius: 5px;
+		float:right;
+	}
+	
+	.image1 a:hover{
+		position:relative;
+		border:4px solid white;
+		border-radius: 5px;
+		float:right;
+	}
+		
+	.t1 {
+   		position: absolute;
+		height: 68px; 
+  		top: 100%; 
+  		margin-top:-68px;   
+   		down:20%;
+		background-color:black;
+  		color:white;
+	    opacity:0.7;
+		font-size:12px;
+  	}
+  	
+  	p {
+  	   text-align:justify;
+  	} 
+
+</style>
+
+<script type="text/javascript">
+			var categories = [{ name: "Entertainment", selected: 1 },
+                  { name: "Arts", selected: 0 },
+                  { name: "Business", selected: 1 },
+                  { name: "Sports", selected: 1 },
+                  { name: "Technology", selected: 1 }
+                 ]
+</script>
+</head> 
+<body> 
+<!-- Container page -->
+
+
+<div data-role="page" data-theme="a" id="home">
+
+	<div data-role="header" id="homeHeader" data-nobackbtn="true">
+		<!-- <div data-role="controlgroup" data-type="horizontal">
+			<a href="" data-role="button" id="refreshButton" data-icon="refresh">Re</a>
+			<a href="" data-role="button" id="prevButton" data-icon="arrow-l">Prev</a>
+			<a href="#search" data-role="button" id="searchButton" data-icon="grid">Find</a>
+			<a href="" data-role="button" id="nextButton" data-icon="arrow-r">Next</a>
+			<a href="#settings" data-role="button" id="settingButton" data-icon="gear">Opt</a>
+		</div>--> 
+		<div  align="CENTER" class="ui-body ui-body-a" >
+			<a href="" data-role="button" id="refreshButton" data-icon="refresh" data-iconpos="notext" data-inline="true">Refresh</a>
+			<a href="" data-role="button" id="prevButton" data-icon="arrow-l" data-iconpos="notext" data-inline="true"> Previous</a>
+			<a href="#search" data-role="button" id="searchButton" data-icon="grid" data-iconpos="notext" data-inline="true">Search</a>
+			<a href="" data-role="button" id="nextButton" data-icon="arrow-r" data-iconpos="notext" data-inline="true"> Next</a>
+			<a href="#settings" data-role="button" id="settingButton" data-icon="gear" data-iconpos="notext" data-inline="true"> Settings</a>
+		</div> 
+		<h1 id="currentCategory">Entertainment</h1>
+	</div>
+	
+	<div data-role="content" id="homeContent">
+		<div data-role="content" id="contentProgress">
+		<div align="CENTER"><h4>Please wait.</h4></div>
+		<div align="CENTER"><img id="spin" src="img/wait.gif"/></div>	
+	</div>
+    </div>
+	
+	<div data-role="footer" id="homeFooter">
+		<h1 id="homeFooter"></h1>
+	</div>
+
+</div>
+<!-- settings -->
+<div data-role="page" data-theme="a" id="settings">
+
+	<div data-role="header" id="settingsHeader" data-nobackbtn="true">
+		<div class="ui-body ui-body-a" >
+			<a href="#home" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true">Back</a>
+		</div>
+		<h1> Settings </h1>
+		<!--<div data-role="controlgroup" data-type="horizontal">
+			<a href="#home" data-role="button" data-icon="arrow-l">Home</a>
+		</div>-->
+		 
+	</div>
+	
+	<div data-role="content" id="settingsContent">
+        <hr></hr>
+		<p> Setting Content</p>
+	</div>
+	
+	<div data-role="footer" id="settingsFooter">
+		
+	</div>
+	
+</div>
+
+<div data-role="page" data-theme="a" id="article">
+
+	<div data-role="header" id="articleHeader" data-nobackbtn="true">
+		<div class="ui-body ui-body-a" >
+			<a href="#home" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true">Back</a>
+		</div>
+		<h1 id="articleHead"> Article </h1>
+	</div>
+	
+	<div data-role="content" id="articleContent">
+	</div>
+	
+	<div data-role="footer" id="articleFooter">
+		<a href="#home" data-role="button" data-icon="arrow-l">Back</a> 
+	</div>
+	
+</div>
+
+<div data-role="page" data-theme="a" id="search">
+
+	<div data-role="header" id="searchHeader" data-nobackbtn="true">
+		<div class="ui-body ui-body-a" >
+			<a href="#home" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"> Back</a>
+		</div>
+		<h1> Search </h1>
+	</div>
+	
+	<div data-role="content" id="searchContent">
+		<form id="searchForm" method="GET">
+			<div data-role="fieldContain">
+                <input type="text" name="queryName" id="query" value="Search" onfocus="this.value='';" />
+                <a href="#home" data-role="button" data-icon="search" id="goButton">Go</a>
+            </div>
+        </form>
+	</div>
+	
+	<div data-role="footer" id="searchFooter">
+		
+	</div>
+</div>
+<script>
+  //var varURI='10.100.97.45:8080/topics-server-side/StoriesProviderMobile?topic=Entertainment&numofarticles=20';
+  var homeContentVar = $('#homeContent');
+  var nextButton = $('#nextButton');
+  var prevButton = $('#prevButton');
+  var refButton = $('#refButton');
+  var currentCategory = $('#currentCategory')
+  var searchContent = $('#searchContent')
+  var refreshButton = $('#refreshButton')
+  var articleHeading = $('#articleHead')
+  var homeFooter = $('#homeFooter')
+  var categories = [{ name: "Entertainment", selected: 1 },
+                    { name: "Arts", selected: 0 },
+                    { name: "Business", selected: 1 },
+                    { name: "Sports", selected: 1 },
+                    { name: "Technology", selected: 1 }
+                   ]
+  var goButton = $('#goButton')
+  var shifter = 0;
+  var globalCategoryData;
+  var globalSearchData;
+  
+  var varURICategory = "http://ec2-107-20-113-114.compute-1.amazonaws.com:8080/topics-server-side/StoriesProviderMobile?numofarticles=20&"
+  var varURI = "Entertainment.json"
+
+  /** Populate the division with news title and source on images */
+  function displayNews(data)
+  {	  
+	  var text="";
+	  var i=0;
+	  globalCategoryData = data;
+	  var j=0;
+	  for (i=0;i<data.length-1;i=i+2)
+	  { 
+		j=i+1;
+	  	src="http://ec2-107-20-113-114.compute-1.amazonaws.com:8080/topics-server-side/ImageProvider?articleid=";
+	  	imgLink1 = src + data[i].articleId+ "&scale=140";
+	  	imgLink2 = src + data[i+1].articleId +"&scale=140";
+	  	clear = '</div><div class="clear">'
+	  	titleL = manageLength(data[i].title);
+	  	titleR = manageLength(data[i+1].title);
+	  	srcL = 'By : '+ data[i].source;
+	  	srcR = 'By : '+ data[i+1].source;
+	  	textL = '<div class=t1> Title:' + titleL + '<br>' + srcL +' </div>'
+	  	textR = '<div class=t1 > Title: '+ titleR +'<br>'+ srcR + '</div> '  
+	  	
+	  	var imgleft= '<div class="image" > <a href="#article"> <img src='+ imgLink1 + ' alt="" height="130px" width="130px" onClick="displayArticle('+i+')"/></a>'+ textL +'</div>'
+	  	var imgright = '<div class="image1" > <a href="#article"><img src=' + imgLink2 +' alt="" height="130px" width="130px" onClick="displayArticle('+j+')"/></a>'+ textR + '</div> <div class="clear"></div> '
+	  	text+='<div class="container">' + imgleft+ ' '+ imgright +"<br/>"
+	  }
+	  homeContentVar.html(text);
+  }
+  
+  /** Populate at he end of the division */
+  function appendNews(data)
+  {
+	  var text="";
+	  var i=0;
+	  var j=0;
+	  globalSearchData = data;
+	  for (i=0;i<data.length-1;i=i+2)
+	  { 
+		j = i+1;
+	  	src="http://ec2-107-20-113-114.compute-1.amazonaws.com:8080/topics-server-side/ImageProvider?articleid=";
+	  	imgLink1 = src + data[i].articleId+ "&scale=140";
+	  	imgLink2 = src + data[j].articleId +"&scale=140";
+	  	clear = '</div><div class="clear">'
+	  	titleL = manageLength(data[i].title);
+	  	titleR = manageLength(data[j].title);
+	  	srcL = 'By : '+ data[i].source;
+	  	srcR = 'By : '+ data[j].source;
+	  	textL = '<div class=t1> Title:' + titleL + '<br>' + srcL +' </div>'
+	  	textR = '<div class=t1 > Title: '+ titleR +'<br>'+ srcR + '</div> '  
+	  	var imgleft= '<div class="image" > <a href="#article"> <img src='+ imgLink1 
+	  	imgleft = imgleft + ' alt="" height="130px" width="130px" onClick="displayArticle('+i+')"/></a>'+ textL +'</div>'
+	  	var imgright = '<div class="image1" > <a href="#article"><img src=' + imgLink2 
+	  	imgright = imgright + ' alt="" height="130px" width="130px" onClick="displayArticle('+j+')"/></a>'+ textR  
+	  	imgright = imgright + '</div> <div class="clear"></div> '
+	  	text+='<div class="container">' + imgleft+ ' '+ imgright +"<br/>"
+	  }
+	  searchContent.html(searchContent.innerHTML+text);
+  }
+  
+  /** Displays perticular article */
+  function displayArticle(i)
+  {    
+	  console.log(i);
+	  var articleContent = $('#articleContent');
+	  var title='<h1 align="middle">'+globalCategoryData[i].title+'</h1><br>';
+	  var imgSrc="http://ec2-107-20-113-114.compute-1.amazonaws.com:8080/topics-server-side/ImageProvider?articleid="
+	  imgSrc = imgSrc +globalCategoryData[i].articleId+"&scale=140";
+	  var img='<img src='+imgSrc+' height:"100%" width="100%" align="middle" /><br>';
+	  var text='<p>' + globalCategoryData[i].displayContent + '</p>';
+	  articleHeading.text(categories[shifter].name)
+	  articleContent.html(title + img + text);
+  }
+  
+  function manageLength(data)
+  {
+	  if(data.length > 40)
+		  return data.substring(0,40)+ '...';
+	  return data;
+  }
+  
+  function getJson( uri , handler)
+  { 
+  	$.getJSON( uri,handler);
+  }
+  
+  goButton.click(function() {
+	  URI = categories[shifter].name
+	  getJson(URI+'.json', displayNews);
+  });
+  
+  refreshButton.click(function() {
+	  URI = categories[shifter].name
+	  getJson(URI+'.json', displayNews);
+	  currentCategory.text(URI)
+      return false;      
+  });
+  
+  nextButton.click(function() {
+	  do {
+	  	shifter = shifter + 1;
+	  	if(shifter == categories.length)
+		  shifter = 0
+	  }while(!categories[shifter].selected)
+		  
+	  URI = categories[shifter].name
+	  getJson(URI+'.json', displayNews);
+
+	  currentCategory.fadeOut(function(){
+		  currentCategory.text(URI)
+          currentCategory.fadeIn();            
+      });  
+	  currentCategory.fadeIn();
+	  homeFooter.text(URI)
+      return false;      
+    });
+  
+  prevButton.click(function() {
+	  do {
+		shifter = shifter - 1;
+		if (shifter < 0)
+		   	 shifter = categories.length -1
+	  }while(!categories[shifter].selected)
+	  
+	  URI = categories[shifter].name
+	  getJson(URI+'.json', displayNews);	  	  
+	  
+	  currentCategory.fadeOut(function(){
+		  currentCategory.text(URI)
+          currentCategory.fadeIn();            
+      });  
+	  currentCategory.fadeIn();
+	  homeFooter.text(URI);
+      return false;      
+    });
+   
+  $(document).ready(function () {
+	getJson(varURI, displayNews);
+  	
+  });
+ 
+     
+</script>
+
+</body>
+</html>
