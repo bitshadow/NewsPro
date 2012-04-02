@@ -1,5 +1,25 @@
 <!DOCTYPE html> 
-<html> 
+<html>
+<!-- 
+/**
+ *  This file is part of NewsPro Application
+ *  Copyright (C) 2012 Jignesh Kakadiya <jigneshhk1992@gmail.com>
+ *                     Mohit Bharne <mohit.bharaney@gmail.com>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ *  published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ --> 
 <head> 
 <title>NewsPro</title> 
 <!--
@@ -10,6 +30,9 @@
 <link rel="stylesheet" href="css-js/jquery.mobile-1.0a2.min.css" />	
 <script src="css-js/jquery-1.4.4.min.js"></script>
 <script src="css-js/jquery.mobile-1.0a2.min.js"></script>
+<script src="css-js/jsShare.js" type="text/javascript"></script>
+<link href="css-js/jsShare.css" rel="stylesheet" type="text/css" />
+
 <!-- <script src="css-js/jquery.ba-dotimeout.js"></script> --> 
 <!-- <script src="css-js/jquery.dst.js"></script> --> 
 
@@ -149,7 +172,9 @@
 		<div class="ui-body ui-body-a" >
 			<a href="#home" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true">Back</a>
 		</div>
-		<h1 id="articleHead"> Article </h1>
+		<!-- <h1 id="articleHead"> Article </h1> -->
+		<div id="shareButtons">
+        </div>
 	</div>
 	
 	<div data-role="content" id="articleContent">
@@ -195,7 +220,7 @@
   var articleHeading = $('#articleHead')
   var homeFooter = $('#homeFooter')
   var categories = [{ name: "Entertainment", selected: 1 },
-                    { name: "Arts", selected: 0 },
+                    { name: "Arts", selected: 1 },
                     { name: "Business", selected: 1 },
                     { name: "Sports", selected: 1 },
                     { name: "Technology", selected: 1 }
@@ -341,8 +366,15 @@
 	  homeFooter.text(URI);
       return false;      
     });
-   
+  
+  function changeLocation(varURI){
+	$.get('',function(data){
+		window.location = varURI;
+	});	
+  }
+  
   $(document).ready(function () {
+	$('#shareButtons').jsShare({ maxwidth: 360 });
 	getJson(varURI, displayNews);
   	
   });
