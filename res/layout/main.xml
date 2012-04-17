@@ -5,7 +5,13 @@
               android:layout_width="fill_parent"  
               android:layout_height="fill_parent"  
         >  
-  
+    <ImageView android:id="@+id/splashscreen"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:visibility="visible"
+        android:src="@drawable/splash"
+        />
+    
     <WebView android:id="@+id/webview"  
              android:layout_width="fill_parent"  
              android:layout_height="fill_parent"  

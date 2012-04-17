@@ -20,12 +20,14 @@ package com.android.hello;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class HelloWorldActivity extends Activity {
 	WebView mWebView;
-
+    String packageName = "com.android.hello";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -33,10 +35,12 @@ public class HelloWorldActivity extends Activity {
         mWebView = (WebView) findViewById(R.id.webview);
         mWebView.setWebViewClient(new NewsClient());
         mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setDatabaseEnabled(true);
+        mWebView.getSettings().setDatabasePath("/data/data/"+packageName+"/databases");
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.loadUrl("file:///android_asset/www/index.html");
     }
-
+        
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
             mWebView.goBack();            
@@ -51,6 +55,15 @@ public class HelloWorldActivity extends Activity {
         	System.out.println("URL: " + url);
         	view.loadUrl("javascript:changeLocation('" + url + "')");
             return true;
+        }
+        
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            //hide loading image
+            findViewById(R.id.splashscreen).setVisibility(view.GONE);
+            
+            //show webview
+            findViewById(R.id.webview).setVisibility(view.VISIBLE);
         }
     }
 }
