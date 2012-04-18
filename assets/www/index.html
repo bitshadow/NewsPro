@@ -4,8 +4,6 @@
 /**
  *  This file is part of NewsPro Application
  *  Copyright (C) 2012 Jignesh Kakadiya <jigneshhk1992@gmail.com>
- *                     Mohit Bharane <mohit.bharaney@gmail.com>
- *					   Rohan Parikh <rohan.parikh21@gmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
@@ -153,9 +151,9 @@
 	
 	<div data-role="content" id="settingsContent">
 		<fieldset data-role="controlgroup">
-	        <input type="checkbox" name="c0" id="c0" onClick="updateSetting(0)"/>
+	    <input type="checkbox" name="c0" id="c0" onClick="updateSetting(0)"/>
 			<label for="c0">TopStories</label>
-	        <input type="checkbox" name="c1" id="c1" onClick="updateSetting(1)"/>
+	    <input type="checkbox" name="c1" id="c1" onClick="updateSetting(1)"/>
 			<label for="c1">Entertainment</label>
 			<input type="checkbox" name="c2" id="c2" onClick="updateSetting(2)"/>
 			<label for="c2">Arts</label>
@@ -255,377 +253,257 @@
   var globalCategoryData;
   var globalSearchData;
   
-  /** Populate the division with news title and source on images */
-  function displayNews(data)
-  {	  
-	  var text="";
-	  var i=0;
-	  onSearchPage = false
-	  onCatPage = true
-	  globalCategoryData = data;
-	  var j=0;
-	  for (i=0;i<data.length;i=i+2)
-	  { 
-		j = i+1;
-	  	src="http://ec2-23-20-208-77.compute-1.amazonaws.com:8080/topics-server-side/ImageProvider?articleid=";
-		
-	  	imgLink1 = src + data[i].articleId+ "&scale=140";
-	  	titleL = manageLength(data[i].title);
-		srcL = 'By : '+ data[i].source;
-		textL = '<div class=t1> Title:' + titleL + '<br>' + srcL +' </div>'
-		var imgleft= '<div class="image" > <a href="#article"> <img src='+ imgLink1 
-		imgleft = imgleft + ' alt="" height="130px" width="130px" onClick="displayArticle('+i+')"/></a>'+ textL +'</div>'
-		if(j<data.length)
-		{
-		imgLink2 = src + data[j].articleId +"&scale=140";
-	  	titleR = manageLength(data[j].title);
-	  	srcR = 'By : '+ data[j].source;
-	  	textR = '<div class=t1 > Title: '+ titleR +'<br>'+ srcR + '</div> '  
-	  	var imgright = '<div class="image1" > <a href="#article"><img src=' + imgLink2 
-	  	imgright = imgright + ' alt="" height="130px" width="130px" onClick="displayArticle('+j+')"/></a>'+ textR  
-		imgright = imgright + '</div> <div class="clear"></div> '
-		}
-		else
-		{
-			var imgright ='';
-		}
-	  	//imgright = imgright + '</div> <div class="clear"></div> '
-		clear = '</div><div class="clear">'
-	  	text+='<div class="container">' + imgleft+ ' '+ imgright +"<br/>"
-	  }
-	  homeContentVar.html(text);
-  }
-  
-  /** Populate at he end of the division */
-  function appendNews(data)
+/** Populate the division with news title and source on images */
+function displayNews(data)
+{
+  var text="";
+  var i=0;
+  onSearchPage = false
+  onCatPage = true
+  globalCategoryData = data;
+  var j=0;
+  for (i=0;i<data.length;i=i+2)
   {
-	  var text="";
-	  var i=0;
-	  var j=0;
-	  globalSearchData = data;
-	  onSearchPage = true
-	  onCatPage = false
-	  for (i=0;i<data.length;i=i+2)
-	  { 
-		j = i+1;
-	  	src="http://ec2-23-20-208-77.compute-1.amazonaws.com:8080/topics-server-side/ImageProvider?articleid=";
-		
-	  	imgLink1 = src + data[i].articleId+ "&scale=140";
-	  	titleL = manageLength(data[i].title);
-		srcL = 'By : '+ data[i].source;
-		textL = '<div class=t1> Title:' + titleL + '<br>' + srcL +' </div>'
-		var imgleft= '<div class="image" > <a href="#article"> <img src='+ imgLink1 
-		imgleft = imgleft + ' alt="" height="130px" width="130px" onClick="displayArticle('+i+')"/></a>'+ textL +'</div>'
-		if(j<data.length)
-		{
-		imgLink2 = src + data[j].articleId +"&scale=140";
-	  	titleR = manageLength(data[j].title);
-	  	srcR = 'By : '+ data[j].source;
-	  	textR = '<div class=t1 > Title: '+ titleR +'<br>'+ srcR + '</div> '  
-	  	var imgright = '<div class="image1" > <a href="#article"><img src=' + imgLink2 
-	  	imgright = imgright + ' alt="" height="130px" width="130px" onClick="displayArticle('+j+')"/></a>'+ textR  
-		imgright = imgright + '</div> <div class="clear"></div> '
-		}
-		else
-		{
-			var imgright ='';
-		}
-	  	//imgright = imgright + '</div> <div class="clear"></div> '
-		clear = '</div><div class="clear">'
-	  	text+='<div class="container">' + imgleft+ ' '+ imgright +"<br/>"
-	  }
-	  searchResult.html(searchContent.innerHTML+text);
-  }
-  
-  /** Displays perticular article */
-  function displayArticle(i)
-  {   
-	console.log("back on article page")
-	if(onSearchPage) {
-	      data=globalSearchData;
-		  document.getElementById('articleBackH').href='#search';
-		  document.getElementById('articleBackF').href='#search';
-	  }
-	  if(onCatPage) {
-	      data = globalCategoryData;
-		  document.getElementById('articleBackH').href='#home';
-		  document.getElementById('articleBackF').href='#home';
-	  }  
-	  console.log(i);
-	  var articleContent = $('#articleContent');
-	  var title='<h1 align="middle">'+data[i].title+'</h1><br>';
-	  var imgSrc="http://ec2-23-20-208-77.compute-1.amazonaws.com:8080/topics-server-side/ImageProvider?articleid="
-	  imgSrc = imgSrc +data[i].articleId+"&scale=140";
-	  var img='<img src='+imgSrc+' height:"100%" width="100%" align="middle" /><br>';
-	  var text='<p>' + data[i].displayContent + '</p>';
-	  articleHeading.text(categories[shifter].name)
-	  articleContent.html(title + img + text);	  
-  }
-  
-  /** if title length is greater than 40 trim it */
-  function manageLength(data)
+    j = i+1;
+    src="http://ec2-23-20-208-77.compute-1.amazonaws.com:8080/topics-server-side/ImageProvider?articleid=";
+
+    imgLink1 = src + data[i].articleId+ "&scale=140";
+    titleL = manageLength(data[i].title);
+    srcL = 'By : '+ data[i].source;
+    textL = '<div class=t1> Title:' + titleL + '<br>' + srcL +' </div>'
+    var imgleft= '<div class="image" > <a href="#article"> <img src='+ imgLink1 
+    imgleft = imgleft + ' alt="" height="130px" width="130px" onClick="displayArticle('+i+')"/></a>'+ textL +'</div>'
+    if(j<data.length)
+    {
+      imgLink2 = src + data[j].articleId +"&scale=140";
+      titleR = manageLength(data[j].title);
+      srcR = 'By : '+ data[j].source;
+      textR = '<div class=t1 > Title: '+ titleR +'<br>'+ srcR + '</div> '  
+      var imgright = '<div class="image1" > <a href="#article"><img src=' + imgLink2 
+      imgright = imgright + ' alt="" height="130px" width="130px" onClick="displayArticle('+j+')"/></a>'+ textR  
+      imgright = imgright + '</div> <div class="clear"></div> '
+    } else {
+      var imgright ='';
+    }
+    clear = '</div><div class="clear">'
+    text+='<div class="container">' + imgleft+ ' '+ imgright +"<br/>"
+    }
+    homeContentVar.html(text);
+}
+
+/** Populate at he end of the division */
+function appendNews(data)
+{
+  var text="";
+  var i=0;
+  var j=0;
+  globalSearchData = data;
+  onSearchPage = true
+  onCatPage = false
+  for (i=0;i<data.length;i=i+2)
   {
-	  if(data.length > 40)
-		  return data.substring(0,40)+ '...';
-	  return data;
+    j = i+1;
+    src="http://ec2-23-20-208-77.compute-1.amazonaws.com:8080/topics-server-side/ImageProvider?articleid=";
+    imgLink1 = src + data[i].articleId+ "&scale=140";
+    titleL = manageLength(data[i].title);
+    srcL = 'By : '+ data[i].source;
+    textL = '<div class=t1> Title:' + titleL + '<br>' + srcL +' </div>'
+    var imgleft= '<div class="image" > <a href="#article"> <img src='+ imgLink1 
+    imgleft = imgleft + ' alt="" height="130px" width="130px" onClick="displayArticle('+i+')"/></a>'+ textL +'</div>'
+    if(j<data.length) {
+      imgLink2 = src + data[j].articleId +"&scale=140";
+      titleR = manageLength(data[j].title);
+      srcR = 'By : '+ data[j].source;
+      textR = '<div class=t1 > Title: '+ titleR +'<br>'+ srcR + '</div> '  
+      var imgright = '<div class="image1" > <a href="#article"><img src=' + imgLink2 
+      imgright = imgright + ' alt="" height="130px" width="130px" onClick="displayArticle('+j+')"/></a>'+ textR  
+      imgright = imgright + '</div> <div class="clear"></div> '
+    } else {
+      var imgright ='';
+    }
+    clear = '</div><div class="clear">'
+    text+='<div class="container">' + imgleft+ ' '+ imgright +"<br/>"
   }
-  
+  searchResult.html(searchContent.innerHTML+text);
+}
+
+/** Displays perticular article */
+function displayArticle(i)
+{
+  console.log("back on article page")
+  if(onSearchPage) {
+    data=globalSearchData;
+    document.getElementById('articleBackH').href='#search';
+    document.getElementById('articleBackF').href='#search';
+  }
+  if(onCatPage) {
+    data = globalCategoryData;
+    document.getElementById('articleBackH').href='#home';
+    document.getElementById('articleBackF').href='#home';
+  }
+  var articleContent = $('#articleContent');
+  var title='<h1 align="middle">'+data[i].title+'</h1><br>';
+  var imgSrc="http://ec2-23-20-208-77.compute-1.amazonaws.com:8080/topics-server-side/ImageProvider?articleid="
+  imgSrc = imgSrc +data[i].articleId+"&scale=140";
+  var img='<img src='+imgSrc+' height:"100%" width="100%" align="middle" /><br>';
+  var text='<p>' + data[i].displayContent + '</p>';
+  articleHeading.text(categories[shifter].name)
+  articleContent.html(title + img + text);	  
+}
+
+/** if title length is greater than 40 trim it */
+function manageLength(data)
+{
+  if(data.length > 40)
+    return data.substring(0,40)+ '...';
+  return data;
+}
+
   /** get json from passed link and hadle it via handler */
   /*function getJson( uri , handler)
-  { 
-  	$.getJSON( uri,handler);
+  {
+    $.getJSON( uri,handler);
   }*/
-  
-  function getJson( uri , handler)
-  {          
-        $.get(uri, handler,'jsonp');
-  }
-  
-  searchBack.click(function() {
-	 onCatPage = true;
-	 onSearchPage = false;
-  });
-  
-  searchButton.click(function(){
-  onCatPage = false;
-	 onSearchPage = true;
-  });
-  
-  /** search button */
-  goButton.click(function() {
-	  var URI = srchURI;
-	  URI = URI + $('#query').val() + "&numofarticles=10"
-	  searchResult.html("");
-	  getJson(URI, appendNews);
-  });
-  
-  /** Refetch the Json and reload the page */
-  refreshButton.click(function() {
-	  var URI = catURI;
-	  cName = categories[shifter].name
-	  URI = URI+ cName
-	  getJson(URI , displayNews);
-	  currentCategory.text(cName);
-  });
-  
-  /** Change to next Category */
-  nextButton.click(function() {
-	  do {
-	  	shifter = shifter + 1;
-	  	if(shifter == categories.length)
-		  shifter = 0
-	  }while(!categories[shifter].selected)
-	  var URI = catURI;
-	  cName = categories[shifter].name
-	  URI = URI+cName
-	  getJson(URI, displayNews);
 
-	  currentCategory.fadeOut(function(){
-		  currentCategory.text(cName)
-          currentCategory.fadeIn();            
-      });  
-	  currentCategory.fadeIn();
-	  homeFooter.text(cName)
-      return false;      
-    });
-  
-  /** Change to previous category */
-  prevButton.click(function() {
-	  do {
-		shifter = shifter - 1;
-		if (shifter < 0)
-		   	 shifter = categories.length -1
-	  }while(!categories[shifter].selected)
-	  var URI = catURI;
-	  cName = categories[shifter].name;		  
-	  URI = URI+cName;
-	  getJson(URI, displayNews);	  	  
-	  
-	  currentCategory.fadeOut(function(){
-		  currentCategory.text(cName)
-          currentCategory.fadeIn();            
-      });  
-	  currentCategory.fadeIn();
-	  homeFooter.text(cName);
-      return false;      
-    });
-  
-  function updateSetting(i){
-	  
-	  $.DSt.set(COOKIE, '');
-	  var c = "#c"+i;
-	  
-	  if($(c).is(':checked')) {
-	  	categories[i].selected = 1;
-	  }
-	  else {
-	  	categories[i].selected = 0;
-	  }
-	  
-	  setting = ''
-      for(j=0; j< categories.length; j++) {
-    	setting = setting+categories[j].selected
+function getJson( uri , handler)
+{
+  $.get(uri, handler,'jsonp');
+}
+
+searchBack.click(function() {
+                 onCatPage = true;
+                 onSearchPage = false;
+                });
+
+searchButton.click(function(){
+                   onCatPage = false;
+                   onSearchPage = true;
+                  });
+
+/** search button */
+goButton.click(function() {
+               var URI = srchURI;
+               URI = URI + $('#query').val() + "&numofarticles=10"
+               searchResult.html("");
+               getJson(URI, appendNews);
+              });
+
+/** Refetch the Json and reload the page */
+refreshButton.click(function() {
+                    var URI = catURI;
+                    cName = categories[shifter].name
+                    URI = URI+ cName
+                    getJson(URI , displayNews);
+                    currentCategory.text(cName);
+                   });
+
+/** Change to next Category */
+nextButton.click(function() {
+                 do {
+                   shifter = shifter + 1;
+                   if(shifter == categories.length)
+                     shifter = 0
+                 } while(!categories[shifter].selected)
+                 var URI = catURI;
+                 cName = categories[shifter].name
+                 URI = URI+cName
+                 getJson(URI, displayNews);
+                 currentCategory.fadeOut(function(){
+                                         currentCategory.text(cName)
+                                         currentCategory.fadeIn();
+                                        });
+                 currentCategory.fadeIn();
+                 homeFooter.text(cName)
+                 return false;
+                });
+
+/** Change to previous category */
+prevButton.click(function() {
+                 do {
+                   shifter = shifter - 1;
+                   if (shifter < 0)
+                     shifter = categories.length -1
+                   } while(!categories[shifter].selected)
+                 var URI = catURI;
+                 cName = categories[shifter].name;
+                 URI = URI+cName;
+                 getJson(URI, displayNews);
+                 currentCategory.fadeOut(function(){
+                                         currentCategory.text(cName)
+                                         currentCategory.fadeIn();
+                                        });
+                 currentCategory.fadeIn();
+                 homeFooter.text(cName);
+                 return false;
+                });
+
+function updateSetting(i){
+  $.DSt.set(COOKIE, '');
+  var c = "#c"+i;
+
+  if($(c).is(':checked')) {
+    categories[i].selected = 1;
+  } else {
+    categories[i].selected = 0;
+  }
+  setting = ''
+  for(j=0; j< categories.length; j++) {
+    setting = setting+categories[j].selected
+  }
+  $.DSt.set(COOKIE, setting);
+  console.log($(c).is(':checked') + " and "+ setting);
+}
+
+function setPreviousSetting()
+{
+  setting = $.DSt.get(COOKIE);
+  console.log(setting);
+  if( setting != null && setting.length > 0) {
+    for(i=0; i< categories.length; i++)
+    {
+      c = '#c'+i;
+      if(setting[i]== 1) { 
+        categories[i].selected = 1
+        $(c).attr("checked", true).checkboxradio("refresh");
+      } else {
+        categories[i].selected = 0
+        $(c).attr("checked", false).checkboxradio("refresh");
       }
-	  $.DSt.set(COOKIE, setting);
-	  console.log($(c).is(':checked') + " and "+ setting);
-  }
-  
-  function setPreviousSetting()
-  {   
-	  setting = $.DSt.get(COOKIE);
-	  console.log(setting);
-	  if( setting != null && setting.length > 0) {
-		  for(i=0; i< categories.length; i++) 
-		  {
-			  c = '#c'+i;
-			  console.log(setting[i])
-			  if(setting[i]== 1) { 
-			  	categories[i].selected = 1
-				$(c).attr("checked", true).checkboxradio("refresh");
-			  } else {
-				categories[i].selected = 0
-				$(c).attr("checked", false).checkboxradio("refresh");
-			  }	  
-			  //console.log($(c).is(':checked') + " and "+ setting);
-			  c = '#c'
-		  }
-	  } else {
-		  for(i=0; i< categories.length; i++) {
-			  c = '#c'+i;
-			  categories[i].selected = 1;
-			  $(c).attr("checked", true).checkboxradio("refresh");
-		  }
-	  }
-  }
-  
-  /** Called by Android to change location of URI */
-  function changeLocation(varURI){
-	$.get('',function(data){
-		window.location = varURI;
-	});	
-  }
-  
-  /** Execute when document is loaded */
-  $(document).ready(function () {
-	var URI = catURI
-	$('#shareButtons').jsShare({ maxwidth: 360 });
-		
-	setPreviousSetting();
-	
-	for(var i=0; i<categories.length;i++)
-	{	
-		if(categories[i].selected) {
-			shifter = i;
-			currentCategory.text(categories[shifter].name)
-			getJson(URI+categories[shifter].name, displayNews);
-			break
-		}
-	}
-  	
-  });
- 
-     
-</script>
-	<!-- <script>
-	var cat = document.getElementById('query');   
-	  
-   			var insertStatement1 = "INSERT INTO Categories ( Category ) VALUES (?)";
-			var insertStatement2 = "INSERT INTO Cities ( City ) VALUES (?)";
-			var insertStatement3 = "INSERT INTO Sites ( Site ) VALUES (?)";
-			var insertStatement4 = "INSERT INTO Search ( searchValues ) VALUES (?)";
-			
-			var deleteStatement1= "DELETE FROM Categories"
-   
-      document.addEventListener("deviceready", onDeviceReady, false);
-    
-      var db = window.openDatabase("Dummy", "1.0", "Just a Dummy DB", 200000);
-      function onDeviceReady() {
-        db.transaction(populateDB, errorCB, successCB);
-	  }
-   
-     function populateDB(tx) {
-    	 //alert("I am here");
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Categories (id INTEGER PRIMARY KEY AUTOINCREMENT, Category TEXT NOT NULL)');
-		tx.executeSql('CREATE TABLE IF NOT EXISTS Cities (id INTEGER PRIMARY KEY AUTOINCREMENT, City TEXT NOT NULL)');
-		tx.executeSql('CREATE TABLE IF NOT EXISTS Sites (id INTEGER PRIMARY KEY AUTOINCREMENT, Site TEXT NOT NULL)');
-		tx.executeSql('CREATE TABLE IF NOT EXISTS Search (id INTEGER PRIMARY KEY AUTOINCREMENT, searchValues TEXT NOT NULL)');
+      c = '#c'
+    }
+  } else {
+     for(i=0; i< categories.length; i++)
+     {
+       c = '#c'+i;
+       categories[i].selected = 1;
+       $(c).attr("checked", true).checkboxradio("refresh");
      }
-  
-    function queryDB(tx) {
-        //tx.executeSql('SELECT * FROM Categories', [], querySuccess, errorCB);
-		//tx.executeSql('SELECT * FROM Cities', [], querySuccess, errorCB);
-		//tx.executeSql('SELECT * FROM Sites', [], querySuccess, errorCB);
-        tx.executeSql('SELECT * FROM Search', [], querySuccess, errorCB);
-		
-    }
+  }
+}
 
-   
-    function querySuccess(tx, results) {
-        console.log("Database worked");
-            	        var len = results.rows.length;
-        console.log("Search table: " + len + " rows found.");
-         for (var i=0; i<len; i++){
-            console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).searchValues);
-        }
-        
-    }
+/** Called by Android to change location of URI */
+function changeLocation(varURI){
+  $.get('',function(data){
+  window.location = varURI;
+  });
+  }
 
-    
-    function errorCB(err) {
-        console.log("Error processing SQL: "+err.code);
-    }
+/** Execute when document is loaded */
+$(document).ready(function () {
+  var URI = catURI
+  $('#shareButtons').jsShare({ maxwidth: 360 });
+  setPreviousSetting();
+  for(var i=0; i<categories.length;i++)
+  {
+     if(categories[i].selected) {
+       shifter = i;
+       currentCategory.text(categories[shifter].name)
+       getJson(URI+categories[shifter].name, displayNews);
+       break
+     }
+  }
+});
 
-    function successCB() {
-    	alert("success!");
-        db.transaction(queryDB, errorCB);
-    }
-
-   function insertValue(){
-  		db.transaction(function(tx){
-   			console.log("I have inserted");
-   			tx.executeSql('INSERT INTO Categories (Category) VALUES (cat.val())');
-   		});
-   		alert("Value added");
-   	}
-   			
-   	function insertRecord() {
-        db.transaction(function(tx) {
-	    	tx.executeSql(insertStatement4, [$('#query').val()], successCB );
-        });
-    }
-      
-    function insertCategories() {
-    	alert("I am here");
-        db.transaction(function(tx) {
-			// var multipleValues = $("#selectId").val();
-				//for(var i=0 ; i<multipleValues.length ; i++)
-			//{
-        	tx.executeSql(insertStatement, [$('#selectId').val()], successCB );
-		//}
-        });
-    }
- 
-	//insertCategories();
-	//var count = 0;
-		
-	function checkboxData(){
-		//var allValues = [] ;
-		alert("in checkbox data");
-		db.transaction(function(tx){
-		tx.executeSql(deleteStatement1,successCB);
-		alert("Deleted");
-	});
-			
-	alert("Save Changes:To save your preferences click OK");
-	jQuery("input[name=categories]:checked").each(function(){
-	var a = $(this).val();
-	alert(a);
-	db.transaction(function(tx) {
-		tx.executeSql(insertStatement1,[a], successCB );
-	});
- });
-	}
-		
-</script>-->
+</script>
 </body>
 </html>
