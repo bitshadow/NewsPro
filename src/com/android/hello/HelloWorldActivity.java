@@ -20,8 +20,6 @@ package com.android.hello;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -57,13 +55,5 @@ public class HelloWorldActivity extends Activity {
             return true;
         }
         
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            //hide loading image
-            findViewById(R.id.splashscreen).setVisibility(view.GONE);
-            
-            //show webview
-            findViewById(R.id.webview).setVisibility(view.VISIBLE);
-        }
     }
 }
