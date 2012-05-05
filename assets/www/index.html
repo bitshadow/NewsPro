@@ -370,71 +370,71 @@ function getJson( uri , handler)
 }
 
 searchBack.click(function() {
-                 onCatPage = true;
-                 onSearchPage = false;
-                });
+  onCatPage = true;
+  onSearchPage = false;
+});
 
 searchButton.click(function(){
-                   onCatPage = false;
-                   onSearchPage = true;
-                  });
+  onCatPage = false;
+  onSearchPage = true;
+});
 
 /** search button */
 goButton.click(function() {
-               var URI = srchURI;
-               URI = URI + $('#query').val() + "&numofarticles=10"
-               searchResult.html("");
-               getJson(URI, appendNews);
-              });
+  var URI = srchURI;
+  URI = URI + $('#query').val() + "&numofarticles=10"
+  searchResult.html("");
+  getJson(URI, appendNews);
+});
 
 /** Refetch the Json and reload the page */
 refreshButton.click(function() {
-                    var URI = catURI;
-                    cName = categories[shifter].name
-                    URI = URI+ cName
-                    getJson(URI , displayNews);
-                    currentCategory.text(cName);
-                   });
+  var URI = catURI;
+  cName = categories[shifter].name
+  URI = URI+ cName
+  getJson(URI , displayNews);
+  currentCategory.text(cName);
+});
 
 /** Change to next Category */
 nextButton.click(function() {
-                 do {
-                   shifter = shifter + 1;
-                   if(shifter == categories.length)
-                     shifter = 0
-                 } while(!categories[shifter].selected)
-                 var URI = catURI;
-                 cName = categories[shifter].name
-                 URI = URI+cName
-                 getJson(URI, displayNews);
-                 currentCategory.fadeOut(function(){
-                                         currentCategory.text(cName)
-                                         currentCategory.fadeIn();
-                                        });
-                 currentCategory.fadeIn();
-                 homeFooter.text(cName)
-                 return false;
-                });
+  do {
+    shifter = shifter + 1;
+    if(shifter == categories.length)
+      shifter = 0
+  } while(!categories[shifter].selected)
+  var URI = catURI;
+  cName = categories[shifter].name
+  URI = URI+cName
+  getJson(URI, displayNews);
+  currentCategory.fadeOut(function(){
+    currentCategory.text(cName)
+    currentCategory.fadeIn();
+  });
+  currentCategory.fadeIn();
+  homeFooter.text(cName)
+  return false;
+});
 
 /** Change to previous category */
 prevButton.click(function() {
-                 do {
-                   shifter = shifter - 1;
-                   if (shifter < 0)
-                     shifter = categories.length -1
-                   } while(!categories[shifter].selected)
-                 var URI = catURI;
-                 cName = categories[shifter].name;
-                 URI = URI+cName;
-                 getJson(URI, displayNews);
-                 currentCategory.fadeOut(function(){
-                                         currentCategory.text(cName)
-                                         currentCategory.fadeIn();
-                                        });
-                 currentCategory.fadeIn();
-                 homeFooter.text(cName);
-                 return false;
-                });
+  do {
+    shifter = shifter - 1;
+    if (shifter < 0)
+      shifter = categories.length -1
+  } while(!categories[shifter].selected)
+  var URI = catURI;
+  cName = categories[shifter].name;
+  URI = URI+cName;
+  getJson(URI, displayNews);
+  currentCategory.fadeOut(function(){
+    currentCategory.text(cName)
+    currentCategory.fadeIn();
+  });
+  currentCategory.fadeIn();
+  homeFooter.text(cName);
+  return false;
+});
 
 function updateSetting(i){
   $.DSt.set(COOKIE, '');
